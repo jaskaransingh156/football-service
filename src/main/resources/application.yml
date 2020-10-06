@@ -1,0 +1,7 @@
+football-api:
+  url: https://apiv2.apifootball.com?
+  key: empty
+  action:
+    get-countries: action=get_countries&APIkey=${football-api.key}
+    get-leagues: action=get_leagues&country_id={country_id}&APIkey=${football-api.key}
+    get-standings: action=get_standings&league_id={league_id}&APIkey=${football-api.key}
