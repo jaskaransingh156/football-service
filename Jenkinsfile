@@ -16,10 +16,6 @@ pipeline {
                 sh 'mvn test'
             }
         }
-	stage('Initialize Docker'){
-            def dockerHome = tool 'myDocker'
-       	    env.PATH = "${dockerHome}/bin:${env.PATH}"
-    	}
         stage('Docker Build') { 
             steps {
                 sh 'docker build -t football-service .'
