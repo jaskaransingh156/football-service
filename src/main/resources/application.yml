@@ -1,3 +1,10 @@
+server:
+  port: 8085
+
+management:
+  server:
+    port: 8086
+
 football-api:
   url: https://apiv2.apifootball.com?
   key: empty

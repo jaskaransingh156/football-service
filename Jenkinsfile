@@ -6,7 +6,7 @@ pipeline {
         }
     }
     stages {
-        stage('Build') {
+        stage('Maven Build') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
@@ -16,9 +16,14 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Deliver') { 
+        stage('Docker Build') { 
             steps {
-                sh 'mvn spring-boot:run'
+                sh 'docker build -t football-service .'
+            }
+        }
+	stage('Run') {
+            steps {
+                sh 'docker run -p 8080:8080 football-service'
             }
         }
     }
