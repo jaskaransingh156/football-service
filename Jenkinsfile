@@ -16,12 +16,15 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Docker Build') { 
+        stage('Docker Build') {
             steps {
-                script {
-                    def dockerImage = docker.build('football-service', '.')
-                }
+                sh 'docker build -t football-service .'
             }
-	    }
+        }
+        stage('Run') {
+            steps {
+                sh 'docker run -p 8080:8080 football-service'
+            }
+        }
     }
 }
