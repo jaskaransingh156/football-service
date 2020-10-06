@@ -19,7 +19,7 @@ pipeline {
         stage('Docker Build') { 
             steps {
                 script {
-                    dockerImage = docker.build
+                    def dockerImage = docker.build('football-service', '.')
                 }
             }
 	}
