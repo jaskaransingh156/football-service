@@ -18,9 +18,11 @@ pipeline {
         }
         stage('Docker Build') { 
             steps {
-                sh 'docker build -t football-service .'
+                script {
+                    dockerImage = docker.build
+                }
             }
-        }
+	}
 	stage('Run') {
             steps {
                 sh 'docker run -p 8080:8080 football-service'
