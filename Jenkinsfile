@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'echo "Push the image to dockerhub etc."'
+                sh 'echo "Todo: Push the image to dockerhub etc."'
             }
         }
         stage('Cleanup') {

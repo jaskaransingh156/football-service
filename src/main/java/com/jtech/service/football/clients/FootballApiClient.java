@@ -35,7 +35,6 @@ public class FootballApiClient {
 
     public List<Country> getCountries() {
         String url = footballApiUrl + getCountriesAction;
-        System.out.println(url);
         ResponseEntity<List<Country>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Country>>(){});
         return response.getBody();
     }
@@ -44,7 +43,6 @@ public class FootballApiClient {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl + getLeaguesAction);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put("country_id", countryId);
-        System.out.println(builder.buildAndExpand(urlParams).toUri());
         ResponseEntity<List<League>> response = restTemplate.exchange(builder.buildAndExpand(urlParams).toUri(), HttpMethod.GET, null, new ParameterizedTypeReference<List<League>>(){});
         return response.getBody();
     }
@@ -53,7 +51,6 @@ public class FootballApiClient {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl + getStandingsAction);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put("league_id", leagueId);
-        System.out.println(builder.buildAndExpand(urlParams).toUri());
         ResponseEntity<List<TeamStanding>> response = restTemplate.exchange(builder.buildAndExpand(urlParams).toUri(), HttpMethod.GET, null, new ParameterizedTypeReference<List<TeamStanding>>(){});
         return response.getBody();
     }
