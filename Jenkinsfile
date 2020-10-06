@@ -26,6 +26,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                sh 'echo "Deployment to dockerhub etc."'
             }
         }
         stage('Cleanup') {
