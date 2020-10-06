@@ -24,14 +24,12 @@ pipeline {
                 sh 'docker build -t ${SERVICE_NAME} .'
             }
         }
-        stage('Run') {
+        stage('Deploy') {
             steps {
-                sh 'docker run -p 8080:8080 ${SERVICE_NAME}'
             }
         }
         stage('Cleanup') {
             steps {
-                sh 'docker stop $(docker ps -q --filter ancestor=${SERVICE_NAME})'
                 sh 'docker image rm -f ${SERVICE_NAME}'
             }
         }
