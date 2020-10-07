@@ -1,14 +1,7 @@
-server:
-  port: 8085
-
-management:
-  server:
-    port: 8086
-
 football-api:
-  url: https://apiv2.apifootball.com?
+  url: https://apiv2.apifootball.com
   key: empty
   action:
-    get-countries: action=get_countries&APIkey=${football-api.key}
-    get-leagues: action=get_leagues&country_id={country_id}&APIkey=${football-api.key}
-    get-standings: action=get_standings&league_id={league_id}&APIkey=${football-api.key}
+    get-countries: get_countries
+    get-leagues: get_leagues
+    get-standings: get_standings

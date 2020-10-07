@@ -12,9 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class FootballApiClient {
@@ -26,7 +24,11 @@ public class FootballApiClient {
     private String getLeaguesAction;
     @Value("${football-api.action.get-standings}")
     private String getStandingsAction;
+    @Value("${football-api.key}")
+    private String apiKey;
     private RestTemplate restTemplate;
+    private static final String ACTION_QUERY_PARAM = "action";
+    private static final String API_KEY_QUERY_PARAM = "APIkey";
 
     @Inject
     public FootballApiClient(RestTemplate restTemplate) {
@@ -34,24 +36,28 @@ public class FootballApiClient {
     }
 
     public List<Country> getCountries() {
-        String url = footballApiUrl + getCountriesAction;
-        ResponseEntity<List<Country>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Country>>(){});
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl)
+                .queryParam(ACTION_QUERY_PARAM ,getCountriesAction)
+                .queryParam(API_KEY_QUERY_PARAM, apiKey);
+        ResponseEntity<List<Country>> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<Country>>(){});
         return response.getBody();
     }
 
     public List<League> getLeagues(String countryId) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl + getLeaguesAction);
-        Map<String, String> urlParams = new HashMap<>();
-        urlParams.put("country_id", countryId);
-        ResponseEntity<List<League>> response = restTemplate.exchange(builder.buildAndExpand(urlParams).toUri(), HttpMethod.GET, null, new ParameterizedTypeReference<List<League>>(){});
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl)
+                .queryParam(ACTION_QUERY_PARAM, getLeaguesAction)
+                .queryParam("country_id", countryId)
+                .queryParam(API_KEY_QUERY_PARAM, apiKey);
+        ResponseEntity<List<League>> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<League>>(){});
         return response.getBody();
     }
 
     public List<TeamStanding> getStandings(String leagueId) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl + getStandingsAction);
-        Map<String, String> urlParams = new HashMap<>();
-        urlParams.put("league_id", leagueId);
-        ResponseEntity<List<TeamStanding>> response = restTemplate.exchange(builder.buildAndExpand(urlParams).toUri(), HttpMethod.GET, null, new ParameterizedTypeReference<List<TeamStanding>>(){});
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(footballApiUrl)
+                .queryParam(ACTION_QUERY_PARAM, getStandingsAction)
+                .queryParam("league_id", leagueId)
+                .queryParam(API_KEY_QUERY_PARAM, apiKey);
+        ResponseEntity<List<TeamStanding>> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<TeamStanding>>(){});
         return response.getBody();
     }
 }
